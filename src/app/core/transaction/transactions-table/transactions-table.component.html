@@ -1,0 +1,80 @@
+<div class="container mx-auto p-4">
+  <button
+    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4"
+    (click)="openCreateTransactionModal()"
+  >
+    Create Transaction
+  </button>
+  <div class="container mx-auto mt-8">
+    <table class="min-w-full bg-white">
+      <thead>
+        <tr>
+          <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">ID</th>
+          <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">Transaction Type</th>
+          <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">Amount</th>
+          <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">Source Bank</th>
+          <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">Target Bank</th>
+          <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions$ | async">
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300 align-top">
+            {{ transaction.id }}
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300 align-top">
+            {{ transaction.transaction_type }}
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300 align-top">
+            {{ transaction.amount | currency: 'GBP' }}
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300 align-top">
+            <ng-container *ngIf="transaction.source">
+              <div *ngIf="transaction.source.bank_name" class="mb-2">
+                <span class="block text-gray-700 text-sm font-bold">Bank Name:</span>
+                <span class="text-sm">{{ transaction.source.bank_name }}</span>
+              </div>
+              <div *ngIf="transaction.source.account_holder_name" class="mb-2">
+                <span class="block text-gray-700 text-sm font-bold">Account Name:</span>
+                <span class="text-sm">{{ transaction.source.account_holder_name }}</span>
+              </div>
+              <div *ngIf="transaction.source.account_number" class="mb-2">
+                <span class="block text-gray-700 text-sm font-bold">Account Number:</span>
+                <span class="text-sm">{{ transaction.source.account_number }}</span>
+              </div>
+              <div *ngIf="transaction.source.sort_code">
+                <span class="block text-gray-700 text-sm font-bold">Sort Code:</span>
+                <span class="text-sm">{{ transaction.source.sort_code }}</span>
+              </div>
+            </ng-container>
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300 align-top">
+            <!-- Add similar labels and values for target bank -->
+            <ng-container *ngIf="transaction.target">
+              <div *ngIf="transaction.target.bank_name" class="mb-2">
+                <span class="block text-gray-700 text-sm font-bold">Bank Name:</span>
+                <span class="text-sm">{{ transaction.target.bank_name }}</span>
+              </div>
+              <div *ngIf="transaction.target.account_holder_name" class="mb-2">
+                <span class="block text-gray-700 text-sm font-bold">Account Name:</span>
+                <span class="text-sm">{{ transaction.target.account_holder_name }}</span>
+              </div>
+              <div *ngIf="transaction.target.account_number"class="mb-2">
+                <span class="block text-gray-700 text-sm font-bold">Account Number:</span>
+                <span class="text-sm">{{ transaction.target.account_number }}</span>
+              </div>
+              <div *ngIf="transaction.target.sort_code">
+                <span class="block text-gray-700 text-sm font-bold">Sort Code:</span>
+                <span class="text-sm">{{ transaction.target.sort_code }}</span>
+              </div>
+            </ng-container>
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300 align-top">
+            {{ transaction.description }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>  
+</div>
+
