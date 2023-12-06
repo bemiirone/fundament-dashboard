@@ -13,7 +13,6 @@ import { Validators } from '@angular/forms';
 
 class MockBankAccountService {
   getBankAccounts() {
-    // Mock the getBankAccounts method
     return of([
       {
         id: 1,
